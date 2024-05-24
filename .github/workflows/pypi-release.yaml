@@ -75,4 +75,17 @@ jobs:
           password: ${{ secrets.PUBLISH_TEST_SECRET }}
           repository_url: https://test.pypi.org/legacy/
           verbose: true
-      
+
+  test-pypi-release:
+    needs: test-built-dist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          activate-environment: parcels
+          python-version: 3.8
+          channels: conda-forge
+      - run: conda install -c conda-forge c-compiler pip
+      - run: pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ oceanparcelsascheforktest==0.1.dev6033 --no-cache
+      - run: curl https://raw.githubusercontent.com/OceanParcels/parcels/master/docs/examples/example_peninsula.py > example_peninsula.py
+      - run: python example_peninsula.py
