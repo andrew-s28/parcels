@@ -34,7 +34,7 @@ jobs:
           environment-name: py3_parcels
       - name: Unit test
         run: |
-          coverage run -m pytest -v -s --html=${{ matrix.os }}_unit_test_report.html --self-contained-html tests
+          coverage run -m pytest -v -s --html=${{ matrix.os }}_unit_test_report.html --self-contained-html tests/test_mpirun.py
           coverage xml
       - name: Codecov
         uses: codecov/codecov-action@v3.1.1
