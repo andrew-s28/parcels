@@ -84,11 +84,12 @@ class ParticleData(ABC):
             mpi_comm = MPI.COMM_WORLD
             mpi_rank = mpi_comm.Get_rank()
             mpi_size = mpi_comm.Get_size()
-            print(mpi_size)
+            print("Size: " + str(mpi_size))
             if lon.size < mpi_size and mpi_size > 1:
                 raise RuntimeError('Cannot initialise with fewer particles than MPI processors')
 
             if mpi_size > 1:
+                print("Partitioning particles")
                 if partition_function is not False:
                     if (self._pu_indicators is None) or (len(self._pu_indicators) != len(lon)):
                         if mpi_rank == 0:

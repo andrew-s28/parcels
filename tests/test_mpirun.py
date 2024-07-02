@@ -15,9 +15,11 @@ def test_mpi_run(tmpdir, repeatdt, maxage, nump):
     outputMPI = tmpdir.join('StommelMPI')
     outputMPI_partition_function = tmpdir.join('StommelMPI_partition_function')
     outputNoMPI = tmpdir.join('StommelNoMPI.zarr')
-
+    print('mpirun -np 2 python %s -p %d -o %s -r %d -a %d -wf False -cpf True' % (stommel_file, nump, outputMPI_partition_function, repeatdt, maxage))
     system('mpirun -np 2 python %s -p %d -o %s -r %d -a %d -wf False -cpf True' % (stommel_file, nump, outputMPI_partition_function, repeatdt, maxage))
+    print('mpirun -np 2 python %s -p %d -o %s -r %d -a %d -wf False' % (stommel_file, nump, outputMPI, repeatdt, maxage))
     system('mpirun -np 2 python %s -p %d -o %s -r %d -a %d -wf False' % (stommel_file, nump, outputMPI, repeatdt, maxage))
+    print('python %s -p %d -o %s -r %d -a %d -wf False' % (stommel_file, nump, outputNoMPI, repeatdt, maxage))
     system('python %s -p %d -o %s -r %d -a %d -wf False' % (stommel_file, nump, outputNoMPI, repeatdt, maxage))
 
     ds2 = xr.open_zarr(outputNoMPI)
