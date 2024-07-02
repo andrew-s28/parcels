@@ -75,6 +75,8 @@ class ParticleData(ABC):
         # particle creation with the "partition_function" kwarg, retrieve it here.
         # If it has not, assign the default function, partitionParticlesMPI_default()
         partition_function = kwargs.pop('partition_function', partitionParticlesMPI_default)
+        print("Initial partition function: ")
+        print(partition_function)
 
         for kwvar in kwargs:
             assert lon.size == kwargs[kwvar].size, (
@@ -90,9 +92,9 @@ class ParticleData(ABC):
                 raise RuntimeError('Cannot initialise with fewer particles than MPI processors')
 
             if mpi_size > 1:
-                print("Partitioning particles...")
-                print(partition_function)
                 if partition_function is not False:
+                    print("Partitioning particles...")
+                    print(partition_function)
                     if (self._pu_indicators is None) or (len(self._pu_indicators) != len(lon)):
                         if mpi_rank == 0:
                             coords = np.vstack((lon, lat)).transpose()

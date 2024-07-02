@@ -181,7 +181,7 @@ Example of particle advection in the steady-state solution of the Stommel equati
     p.add_argument('-cpf', '--custom_partition_function', default=False,
                    help='Use a custom partition_function (for MPI testing purposes)')
     args = p.parse_args(args)
-
+    print(args)
     timer.args.stop()
     timer.stommel = timer.Timer('Stommel', parent=timer.root)
     stommel_example(args.particles, mode=args.mode, verbose=args.verbose, method=method[args.method],
