@@ -34,6 +34,7 @@ def partitionParticlesMPI_default(coords, mpi_size=1):
     if KMeans:
         kmeans = KMeans(n_clusters=mpi_size, random_state=0).fit(coords)
         mpiProcs = kmeans.labels_
+        print(kmeans)
     else:  # assigning random labels if no KMeans (see https://github.com/OceanParcels/parcels/issues/1261)
         logger.warning_once('sklearn needs to be available if MPI is installed. '
                             'See https://docs.oceanparcels.org/en/latest/installation.html#installation-for-developers for more information')
@@ -89,7 +90,8 @@ class ParticleData(ABC):
                 raise RuntimeError('Cannot initialise with fewer particles than MPI processors')
 
             if mpi_size > 1:
-                print("Partitioning particles")
+                print("Partitioning particles...")
+                print(partition_function)
                 if partition_function is not False:
                     if (self._pu_indicators is None) or (len(self._pu_indicators) != len(lon)):
                         if mpi_rank == 0:
