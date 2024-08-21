@@ -1,5 +1,6 @@
 name: unit-tests
 on:
+  workflow_dispatch:
   push:
     branches:
       - "master"
@@ -9,7 +10,6 @@ on:
       - "*"
   schedule:
     - cron: "0 7 * * 1" # Run every Monday at 7:00 UTC
-  workflow_dispatch:
 
 defaults:
   run:
